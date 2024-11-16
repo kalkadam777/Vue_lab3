@@ -34,50 +34,49 @@
                 <div
                     v-for="task in sortedTasks"
                     :key="task.id"
-                    class="col-12 col-md-6"
+                    :class="[
+                        'card',
+                        'shadow-sm',
+                        'border-0',
+                        'p-3',
+                        getPriorityClass(task.priority),
+                    ]"
                 >
                     <div
-                        :class="['card', getPriorityClass(task.priority)]"
-                        class="shadow-sm border-0 p-3"
+                        class="d-flex justify-content-between align-items-center"
                     >
-                        <div
-                            class="d-flex justify-content-between align-items-center"
-                        >
-                            <div>
-                                <h5
-                                    class="mb-1"
-                                    :class="{
-                                        'text-decoration-line-through':
-                                            task.completed,
-                                    }"
-                                >
-                                    {{ task.title }}
-                                </h5>
-                                <small class="text-muted">{{
-                                    task.priority
-                                }}</small>
-                            </div>
-                            <div class="actions">
-                                <button
-                                    class="btn btn-success btn-sm"
-                                    @click="toggleTaskCompletion(task.id)"
-                                >
-                                    <i
-                                        :class="[
-                                            'fas',
-                                            task.completed
-                                                ? 'fa-undo'
-                                                : 'fa-check',
-                                        ]"
-                                    ></i>
-                                </button>
-                                <button
-                                    class="btn btn-danger btn-sm"
-                                    @click="deleteTask(task.id)"
-                                >
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
+                        <div>
+                            <h5
+                                class="mb-1"
+                                :class="{
+                                    'text-decoration-line-through':
+                                        task.completed,
+                                }"
+                            >
+                                {{ task.title }}
+                            </h5>
+                            <small class="text-muted">{{
+                                task.priority
+                            }}</small>
+                        </div>
+                        <div class="actions">
+                            <button
+                                class="btn btn-success btn-sm"
+                                @click="toggleTaskCompletion(task.id)"
+                            >
+                                <i
+                                    :class="[
+                                        'fas',
+                                        task.completed ? 'fa-undo' : 'fa-check',
+                                    ]"
+                                ></i>
+                            </button>
+                            <button
+                                class="btn btn-danger btn-sm"
+                                @click="deleteTask(task.id)"
+                            >
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -118,6 +117,7 @@ const addNewTask = async () => {
     const lastTask = document.querySelector(".task-list div:last-child");
     lastTask?.scrollIntoView({ behavior: "smooth" });
 };
+
 const getPriorityClass = (priority: "low" | "medium" | "high") => {
     switch (priority) {
         case "low":
@@ -132,7 +132,7 @@ const getPriorityClass = (priority: "low" | "medium" | "high") => {
 };
 </script>
 
-<style scoped>
+<style>
 /* Анимация задач */
 .task-list-enter-active,
 .task-list-leave-active {
@@ -151,15 +151,18 @@ const getPriorityClass = (priority: "low" | "medium" | "high") => {
 
 /* Цвета для приоритетов */
 .card.low {
-    border-left: 5px solid #28a745;
+    border-left: 5px solid #28a745 !important;
+    background-color: #e9f7ef !important;
 }
 
 .card.medium {
-    border-left: 5px solid #ffc107;
+    border-left: 5px solid #ffc107 !important;
+    background-color: #fff8e1 !important;
 }
 
 .card.high {
-    border-left: 5px solid #dc3545;
+    border-left: 5px solid #dc3545 !important;
+    background-color: #f8d7da !important;
 }
 
 /* Иконки действий */
